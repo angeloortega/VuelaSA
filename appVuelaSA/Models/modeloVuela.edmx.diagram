@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9dc1171a46164bb7b668944028836705" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="proyecto2RequeModel.aeropuerto" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.asiento" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.avion" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.cliente" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.empleado" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.equipaje" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.pasajeabordar" Width="1.5" PointX="14.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.reservacion" Width="1.5" PointX="12" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.usuario" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.viaje" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.viajevuelo" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.vuelo" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="proyecto2RequeModel.viaje_aeropuerto_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.viaje_aeropuerto_fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.vuelo_aeropuerto_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.vuelo_aeropuerto_fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.asiento_avion_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.cliente_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.equipaje_cliente_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.reservacion_cliente_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.empleado_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.equipaje_viaje_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.pasajeabordar_checkin_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.reservacion_viajevuelo_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.viajevuelo_viaje_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.viajevuelo_vuelo_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.equipajevuelo" ManuallyRouted="false" />
+        <AssociationConnector Association="proyecto2RequeModel.lineareservacion" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

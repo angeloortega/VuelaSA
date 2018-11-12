@@ -1,0 +1,1147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aeropuerto">
+          <Key>
+            <PropertyRef Name="idaeropuerto" />
+          </Key>
+          <Property Name="idaeropuerto" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="pais" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="ciudad" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="asiento">
+          <Key>
+            <PropertyRef Name="idasiento" />
+          </Key>
+          <Property Name="idasiento" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="categoria" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="precio" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idavion" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="avion">
+          <Key>
+            <PropertyRef Name="idavion" />
+          </Key>
+          <Property Name="idavion" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="capacidad" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="idcliente" />
+          </Key>
+          <Property Name="idcliente" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="paisresidencia" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="pasaporte" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="idusuario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="idempleado" />
+          </Key>
+          <Property Name="idempleado" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="idusuario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipaje">
+          <Key>
+            <PropertyRef Name="idequipaje" />
+          </Key>
+          <Property Name="idequipaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idcliente" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="peso" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="idViaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipajevuelo">
+          <Key>
+            <PropertyRef Name="idequipaje" />
+            <PropertyRef Name="idvuelo" />
+          </Key>
+          <Property Name="idequipaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idvuelo" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lineareservacion">
+          <Key>
+            <PropertyRef Name="idreservacion" />
+            <PropertyRef Name="idasiento" />
+          </Key>
+          <Property Name="idreservacion" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idasiento" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pasajeabordar">
+          <Key>
+            <PropertyRef Name="idpasajeabordar" />
+          </Key>
+          <Property Name="idpasajeabordar" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idreservacion" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="fchpasaje" Type="date" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reservacion">
+          <Key>
+            <PropertyRef Name="idreservacion" />
+          </Key>
+          <Property Name="idreservacion" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="fchreservacion" Type="date" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="idcliente" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="idvuelo" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idviaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="contrasenna" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="tipousuario" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viaje">
+          <Key>
+            <PropertyRef Name="idviaje" />
+          </Key>
+          <Property Name="idviaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="horadepartida" Type="date" Nullable="false" />
+          <Property Name="horadellegada" Type="date" Nullable="false" />
+          <Property Name="precio" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="idaeropuertoorigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idaeropuertodestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viajevuelo">
+          <Key>
+            <PropertyRef Name="idviaje" />
+            <PropertyRef Name="idvuelo" />
+          </Key>
+          <Property Name="idviaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idvuelo" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vuelo">
+          <Key>
+            <PropertyRef Name="idvuelo" />
+          </Key>
+          <Property Name="idvuelo" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="horadepartida" Type="date" Nullable="false" />
+          <Property Name="horadellegada" Type="date" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="idavion" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="idaeropuertoorigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idaeropuertodestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="asiento_avion_fk">
+          <End Role="avion" Type="Self.avion" Multiplicity="1" />
+          <End Role="asiento" Type="Self.asiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="avion">
+              <PropertyRef Name="idavion" />
+            </Principal>
+            <Dependent Role="asiento">
+              <PropertyRef Name="idavion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cliente_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empleado_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipaje_cliente_fk">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="idcliente" />
+            </Principal>
+            <Dependent Role="equipaje">
+              <PropertyRef Name="idcliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipaje_viaje_fk">
+          <End Role="viaje" Type="Self.viaje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="idviaje" />
+            </Principal>
+            <Dependent Role="equipaje">
+              <PropertyRef Name="idViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipajevuelo_equipaje_fk">
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipajevuelo" Type="Self.equipajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipaje">
+              <PropertyRef Name="idequipaje" />
+            </Principal>
+            <Dependent Role="equipajevuelo">
+              <PropertyRef Name="idequipaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipajevuelo_vuelo_fk">
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipajevuelo" Type="Self.equipajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vuelo">
+              <PropertyRef Name="idvuelo" />
+            </Principal>
+            <Dependent Role="equipajevuelo">
+              <PropertyRef Name="idvuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lineareservacion_asiento_fk">
+          <End Role="asiento" Type="Self.asiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lineareservacion" Type="Self.lineareservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="asiento">
+              <PropertyRef Name="idasiento" />
+            </Principal>
+            <Dependent Role="lineareservacion">
+              <PropertyRef Name="idasiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lineareservacion_reservacion_fk">
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lineareservacion" Type="Self.lineareservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reservacion">
+              <PropertyRef Name="idreservacion" />
+            </Principal>
+            <Dependent Role="lineareservacion">
+              <PropertyRef Name="idreservacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pasajeabordar_checkin_fk">
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pasajeabordar" Type="Self.pasajeabordar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reservacion">
+              <PropertyRef Name="idreservacion" />
+            </Principal>
+            <Dependent Role="pasajeabordar">
+              <PropertyRef Name="idreservacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reservacion_cliente_fk">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="idcliente" />
+            </Principal>
+            <Dependent Role="reservacion">
+              <PropertyRef Name="idcliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reservacion_viajevuelo_fk">
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viajevuelo">
+              <PropertyRef Name="idviaje" />
+              <PropertyRef Name="idvuelo" />
+            </Principal>
+            <Dependent Role="reservacion">
+              <PropertyRef Name="idviaje" />
+              <PropertyRef Name="idvuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viaje_aeropuerto_fk">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="viaje">
+              <PropertyRef Name="idaeropuertoorigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viaje_aeropuerto_fk2">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="viaje">
+              <PropertyRef Name="idaeropuertodestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viajevuelo_viaje_fk">
+          <End Role="viaje" Type="Self.viaje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="idviaje" />
+            </Principal>
+            <Dependent Role="viajevuelo">
+              <PropertyRef Name="idviaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viajevuelo_vuelo_fk">
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vuelo">
+              <PropertyRef Name="idvuelo" />
+            </Principal>
+            <Dependent Role="viajevuelo">
+              <PropertyRef Name="idvuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vuelo_aeropuerto_fk">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="vuelo">
+              <PropertyRef Name="idaeropuertoorigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vuelo_aeropuerto_fk2">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="vuelo">
+              <PropertyRef Name="idaeropuertodestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Asientos_Por_Vuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idVuelo" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="Viajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Vuelos_Por_Viaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idViaje" Type="numeric" Mode="In" />
+        </Function>
+        <EntityContainer Name="proyecto2RequeModelStoreContainer">
+          <EntitySet Name="aeropuerto" EntityType="Self.aeropuerto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="asiento" EntityType="Self.asiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="avion" EntityType="Self.avion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="equipaje" EntityType="Self.equipaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="equipajevuelo" EntityType="Self.equipajevuelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lineareservacion" EntityType="Self.lineareservacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pasajeabordar" EntityType="Self.pasajeabordar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservacion" EntityType="Self.reservacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viaje" EntityType="Self.viaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viajevuelo" EntityType="Self.viajevuelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vuelo" EntityType="Self.vuelo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="asiento_avion_fk" Association="Self.asiento_avion_fk">
+            <End Role="avion" EntitySet="avion" />
+            <End Role="asiento" EntitySet="asiento" />
+          </AssociationSet>
+          <AssociationSet Name="cliente_usuario_fk" Association="Self.cliente_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="empleado_usuario_fk" Association="Self.empleado_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="equipaje_cliente_fk" Association="Self.equipaje_cliente_fk">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="equipaje" EntitySet="equipaje" />
+          </AssociationSet>
+          <AssociationSet Name="equipaje_viaje_fk" Association="Self.equipaje_viaje_fk">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="equipaje" EntitySet="equipaje" />
+          </AssociationSet>
+          <AssociationSet Name="equipajevuelo_equipaje_fk" Association="Self.equipajevuelo_equipaje_fk">
+            <End Role="equipaje" EntitySet="equipaje" />
+            <End Role="equipajevuelo" EntitySet="equipajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="equipajevuelo_vuelo_fk" Association="Self.equipajevuelo_vuelo_fk">
+            <End Role="vuelo" EntitySet="vuelo" />
+            <End Role="equipajevuelo" EntitySet="equipajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="lineareservacion_asiento_fk" Association="Self.lineareservacion_asiento_fk">
+            <End Role="asiento" EntitySet="asiento" />
+            <End Role="lineareservacion" EntitySet="lineareservacion" />
+          </AssociationSet>
+          <AssociationSet Name="lineareservacion_reservacion_fk" Association="Self.lineareservacion_reservacion_fk">
+            <End Role="reservacion" EntitySet="reservacion" />
+            <End Role="lineareservacion" EntitySet="lineareservacion" />
+          </AssociationSet>
+          <AssociationSet Name="pasajeabordar_checkin_fk" Association="Self.pasajeabordar_checkin_fk">
+            <End Role="reservacion" EntitySet="reservacion" />
+            <End Role="pasajeabordar" EntitySet="pasajeabordar" />
+          </AssociationSet>
+          <AssociationSet Name="reservacion_cliente_fk" Association="Self.reservacion_cliente_fk">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="reservacion" EntitySet="reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="reservacion_viajevuelo_fk" Association="Self.reservacion_viajevuelo_fk">
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+            <End Role="reservacion" EntitySet="reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="viaje_aeropuerto_fk" Association="Self.viaje_aeropuerto_fk">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="viaje" EntitySet="viaje" />
+          </AssociationSet>
+          <AssociationSet Name="viaje_aeropuerto_fk2" Association="Self.viaje_aeropuerto_fk2">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="viaje" EntitySet="viaje" />
+          </AssociationSet>
+          <AssociationSet Name="viajevuelo_viaje_fk" Association="Self.viajevuelo_viaje_fk">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="viajevuelo_vuelo_fk" Association="Self.viajevuelo_vuelo_fk">
+            <End Role="vuelo" EntitySet="vuelo" />
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="vuelo_aeropuerto_fk" Association="Self.vuelo_aeropuerto_fk">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="vuelo" EntitySet="vuelo" />
+          </AssociationSet>
+          <AssociationSet Name="vuelo_aeropuerto_fk2" Association="Self.vuelo_aeropuerto_fk2">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="vuelo" EntitySet="vuelo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="proyecto2RequeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="aeropuerto">
+          <Key>
+            <PropertyRef Name="idaeropuerto" />
+          </Key>
+          <Property Name="idaeropuerto" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="pais" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ciudad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="viaje" Relationship="Self.viaje_aeropuerto_fk" FromRole="aeropuerto" ToRole="viaje" />
+          <NavigationProperty Name="viaje1" Relationship="Self.viaje_aeropuerto_fk2" FromRole="aeropuerto" ToRole="viaje" />
+          <NavigationProperty Name="vuelo" Relationship="Self.vuelo_aeropuerto_fk" FromRole="aeropuerto" ToRole="vuelo" />
+          <NavigationProperty Name="vuelo1" Relationship="Self.vuelo_aeropuerto_fk2" FromRole="aeropuerto" ToRole="vuelo" />
+        </EntityType>
+        <EntityType Name="asiento">
+          <Key>
+            <PropertyRef Name="idasiento" />
+          </Key>
+          <Property Name="idasiento" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="categoria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idavion" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <NavigationProperty Name="avion" Relationship="Self.asiento_avion_fk" FromRole="asiento" ToRole="avion" />
+          <NavigationProperty Name="reservacion" Relationship="Self.lineareservacion" FromRole="asiento" ToRole="reservacion" />
+        </EntityType>
+        <EntityType Name="avion">
+          <Key>
+            <PropertyRef Name="idavion" />
+          </Key>
+          <Property Name="idavion" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="capacidad" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <NavigationProperty Name="asiento" Relationship="Self.asiento_avion_fk" FromRole="avion" ToRole="asiento" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="idcliente" />
+          </Key>
+          <Property Name="idcliente" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="paisresidencia" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pasaporte" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idusuario" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.cliente_usuario_fk" FromRole="cliente" ToRole="usuario" />
+          <NavigationProperty Name="equipaje" Relationship="Self.equipaje_cliente_fk" FromRole="cliente" ToRole="equipaje" />
+          <NavigationProperty Name="reservacion" Relationship="Self.reservacion_cliente_fk" FromRole="cliente" ToRole="reservacion" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="idempleado" />
+          </Key>
+          <Property Name="idempleado" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idusuario" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.empleado_usuario_fk" FromRole="empleado" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="equipaje">
+          <Key>
+            <PropertyRef Name="idequipaje" />
+          </Key>
+          <Property Name="idequipaje" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idcliente" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="peso" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idViaje" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.equipaje_cliente_fk" FromRole="equipaje" ToRole="cliente" />
+          <NavigationProperty Name="viaje" Relationship="Self.equipaje_viaje_fk" FromRole="equipaje" ToRole="viaje" />
+          <NavigationProperty Name="vuelo" Relationship="Self.equipajevuelo" FromRole="equipaje" ToRole="vuelo" />
+        </EntityType>
+        <EntityType Name="pasajeabordar">
+          <Key>
+            <PropertyRef Name="idpasajeabordar" />
+          </Key>
+          <Property Name="idpasajeabordar" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idreservacion" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="fchpasaje" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="reservacion" Relationship="Self.pasajeabordar_checkin_fk" FromRole="pasajeabordar" ToRole="reservacion" />
+        </EntityType>
+        <EntityType Name="reservacion">
+          <Key>
+            <PropertyRef Name="idreservacion" />
+          </Key>
+          <Property Name="idreservacion" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="fchreservacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idcliente" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="idvuelo" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idviaje" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.reservacion_cliente_fk" FromRole="reservacion" ToRole="cliente" />
+          <NavigationProperty Name="pasajeabordar" Relationship="Self.pasajeabordar_checkin_fk" FromRole="reservacion" ToRole="pasajeabordar" />
+          <NavigationProperty Name="viajevuelo" Relationship="Self.reservacion_viajevuelo_fk" FromRole="reservacion" ToRole="viajevuelo" />
+          <NavigationProperty Name="asiento" Relationship="Self.lineareservacion" FromRole="reservacion" ToRole="asiento" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasenna" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipousuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.cliente_usuario_fk" FromRole="usuario" ToRole="cliente" />
+          <NavigationProperty Name="empleado" Relationship="Self.empleado_usuario_fk" FromRole="usuario" ToRole="empleado" />
+        </EntityType>
+        <EntityType Name="viaje">
+          <Key>
+            <PropertyRef Name="idviaje" />
+          </Key>
+          <Property Name="idviaje" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="horadepartida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="horadellegada" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="precio" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idaeropuertoorigen" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idaeropuertodestino" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <NavigationProperty Name="aeropuerto" Relationship="Self.viaje_aeropuerto_fk" FromRole="viaje" ToRole="aeropuerto" />
+          <NavigationProperty Name="aeropuerto1" Relationship="Self.viaje_aeropuerto_fk2" FromRole="viaje" ToRole="aeropuerto" />
+          <NavigationProperty Name="equipaje" Relationship="Self.equipaje_viaje_fk" FromRole="viaje" ToRole="equipaje" />
+          <NavigationProperty Name="viajevuelo" Relationship="Self.viajevuelo_viaje_fk" FromRole="viaje" ToRole="viajevuelo" />
+        </EntityType>
+        <EntityType Name="viajevuelo">
+          <Key>
+            <PropertyRef Name="idviaje" />
+            <PropertyRef Name="idvuelo" />
+          </Key>
+          <Property Name="idviaje" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idvuelo" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="reservacion" Relationship="Self.reservacion_viajevuelo_fk" FromRole="viajevuelo" ToRole="reservacion" />
+          <NavigationProperty Name="viaje" Relationship="Self.viajevuelo_viaje_fk" FromRole="viajevuelo" ToRole="viaje" />
+          <NavigationProperty Name="vuelo" Relationship="Self.viajevuelo_vuelo_fk" FromRole="viajevuelo" ToRole="vuelo" />
+        </EntityType>
+        <EntityType Name="vuelo">
+          <Key>
+            <PropertyRef Name="idvuelo" />
+          </Key>
+          <Property Name="idvuelo" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="horadepartida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="horadellegada" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idavion" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="idaeropuertoorigen" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idaeropuertodestino" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <NavigationProperty Name="aeropuerto" Relationship="Self.vuelo_aeropuerto_fk" FromRole="vuelo" ToRole="aeropuerto" />
+          <NavigationProperty Name="aeropuerto1" Relationship="Self.vuelo_aeropuerto_fk2" FromRole="vuelo" ToRole="aeropuerto" />
+          <NavigationProperty Name="viajevuelo" Relationship="Self.viajevuelo_vuelo_fk" FromRole="vuelo" ToRole="viajevuelo" />
+          <NavigationProperty Name="equipaje" Relationship="Self.equipajevuelo" FromRole="vuelo" ToRole="equipaje" />
+        </EntityType>
+        <Association Name="viaje_aeropuerto_fk">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="viaje">
+              <PropertyRef Name="idaeropuertoorigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viaje_aeropuerto_fk2">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="viaje">
+              <PropertyRef Name="idaeropuertodestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vuelo_aeropuerto_fk">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="vuelo">
+              <PropertyRef Name="idaeropuertoorigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vuelo_aeropuerto_fk2">
+          <End Role="aeropuerto" Type="Self.aeropuerto" Multiplicity="1" />
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeropuerto">
+              <PropertyRef Name="idaeropuerto" />
+            </Principal>
+            <Dependent Role="vuelo">
+              <PropertyRef Name="idaeropuertodestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="asiento_avion_fk">
+          <End Role="avion" Type="Self.avion" Multiplicity="1" />
+          <End Role="asiento" Type="Self.asiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="avion">
+              <PropertyRef Name="idavion" />
+            </Principal>
+            <Dependent Role="asiento">
+              <PropertyRef Name="idavion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cliente_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipaje_cliente_fk">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="idcliente" />
+            </Principal>
+            <Dependent Role="equipaje">
+              <PropertyRef Name="idcliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reservacion_cliente_fk">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="idcliente" />
+            </Principal>
+            <Dependent Role="reservacion">
+              <PropertyRef Name="idcliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empleado_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipaje_viaje_fk">
+          <End Role="viaje" Type="Self.viaje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="idviaje" />
+            </Principal>
+            <Dependent Role="equipaje">
+              <PropertyRef Name="idViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pasajeabordar_checkin_fk">
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pasajeabordar" Type="Self.pasajeabordar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reservacion">
+              <PropertyRef Name="idreservacion" />
+            </Principal>
+            <Dependent Role="pasajeabordar">
+              <PropertyRef Name="idreservacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reservacion_viajevuelo_fk">
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viajevuelo">
+              <PropertyRef Name="idviaje" />
+              <PropertyRef Name="idvuelo" />
+            </Principal>
+            <Dependent Role="reservacion">
+              <PropertyRef Name="idviaje" />
+              <PropertyRef Name="idvuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viajevuelo_viaje_fk">
+          <End Role="viaje" Type="Self.viaje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="idviaje" />
+            </Principal>
+            <Dependent Role="viajevuelo">
+              <PropertyRef Name="idviaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="viajevuelo_vuelo_fk">
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="viajevuelo" Type="Self.viajevuelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vuelo">
+              <PropertyRef Name="idvuelo" />
+            </Principal>
+            <Dependent Role="viajevuelo">
+              <PropertyRef Name="idvuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipajevuelo">
+          <End Role="equipaje" Type="Self.equipaje" Multiplicity="*" />
+          <End Role="vuelo" Type="Self.vuelo" Multiplicity="*" />
+        </Association>
+        <Association Name="lineareservacion">
+          <End Role="asiento" Type="Self.asiento" Multiplicity="*" />
+          <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="proyecto2RequeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aeropuerto" EntityType="Self.aeropuerto" />
+          <EntitySet Name="asiento" EntityType="Self.asiento" />
+          <EntitySet Name="avion" EntityType="Self.avion" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" />
+          <EntitySet Name="equipaje" EntityType="Self.equipaje" />
+          <EntitySet Name="pasajeabordar" EntityType="Self.pasajeabordar" />
+          <EntitySet Name="reservacion" EntityType="Self.reservacion" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <EntitySet Name="viaje" EntityType="Self.viaje" />
+          <EntitySet Name="viajevuelo" EntityType="Self.viajevuelo" />
+          <EntitySet Name="vuelo" EntityType="Self.vuelo" />
+          <AssociationSet Name="viaje_aeropuerto_fk" Association="Self.viaje_aeropuerto_fk">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="viaje" EntitySet="viaje" />
+          </AssociationSet>
+          <AssociationSet Name="viaje_aeropuerto_fk2" Association="Self.viaje_aeropuerto_fk2">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="viaje" EntitySet="viaje" />
+          </AssociationSet>
+          <AssociationSet Name="vuelo_aeropuerto_fk" Association="Self.vuelo_aeropuerto_fk">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="vuelo" EntitySet="vuelo" />
+          </AssociationSet>
+          <AssociationSet Name="vuelo_aeropuerto_fk2" Association="Self.vuelo_aeropuerto_fk2">
+            <End Role="aeropuerto" EntitySet="aeropuerto" />
+            <End Role="vuelo" EntitySet="vuelo" />
+          </AssociationSet>
+          <AssociationSet Name="asiento_avion_fk" Association="Self.asiento_avion_fk">
+            <End Role="avion" EntitySet="avion" />
+            <End Role="asiento" EntitySet="asiento" />
+          </AssociationSet>
+          <AssociationSet Name="cliente_usuario_fk" Association="Self.cliente_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="equipaje_cliente_fk" Association="Self.equipaje_cliente_fk">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="equipaje" EntitySet="equipaje" />
+          </AssociationSet>
+          <AssociationSet Name="reservacion_cliente_fk" Association="Self.reservacion_cliente_fk">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="reservacion" EntitySet="reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="empleado_usuario_fk" Association="Self.empleado_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="equipaje_viaje_fk" Association="Self.equipaje_viaje_fk">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="equipaje" EntitySet="equipaje" />
+          </AssociationSet>
+          <AssociationSet Name="pasajeabordar_checkin_fk" Association="Self.pasajeabordar_checkin_fk">
+            <End Role="reservacion" EntitySet="reservacion" />
+            <End Role="pasajeabordar" EntitySet="pasajeabordar" />
+          </AssociationSet>
+          <AssociationSet Name="reservacion_viajevuelo_fk" Association="Self.reservacion_viajevuelo_fk">
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+            <End Role="reservacion" EntitySet="reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="viajevuelo_viaje_fk" Association="Self.viajevuelo_viaje_fk">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="viajevuelo_vuelo_fk" Association="Self.viajevuelo_vuelo_fk">
+            <End Role="vuelo" EntitySet="vuelo" />
+            <End Role="viajevuelo" EntitySet="viajevuelo" />
+          </AssociationSet>
+          <AssociationSet Name="equipajevuelo" Association="Self.equipajevuelo">
+            <End Role="equipaje" EntitySet="equipaje" />
+            <End Role="vuelo" EntitySet="vuelo" />
+          </AssociationSet>
+          <AssociationSet Name="lineareservacion" Association="Self.lineareservacion">
+            <End Role="asiento" EntitySet="asiento" />
+            <End Role="reservacion" EntitySet="reservacion" />
+          </AssociationSet>
+          <FunctionImport Name="Asientos_Por_Vuelo" ReturnType="Collection(proyecto2RequeModel.Asientos_Por_Vuelo_Result)">
+            <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Viajes" ReturnType="Collection(proyecto2RequeModel.Viajes_Result)" />
+          <FunctionImport Name="Vuelos_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Vuelos_Por_Viaje_Result)">
+            <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Asientos_Por_Vuelo_Result">
+          <Property Type="Decimal" Name="idAsiento" Nullable="false" Precision="8" Scale="0" />
+          <Property Type="String" Name="estado" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="categoria" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idAvion" Nullable="false" Precision="4" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Viajes_Result">
+          <Property Type="Decimal" Name="idviaje" Nullable="false" Precision="10" Scale="0" />
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="5" Scale="0" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="120" />
+          <Property Type="Decimal" Name="idaeropuertoorigen" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idaeropuertodestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Vuelos_Por_Viaje_Result">
+          <Property Type="Decimal" Name="idVuelo" Nullable="false" Precision="10" Scale="0" />
+          <Property Type="DateTime" Name="horaDePartida" Nullable="false" />
+          <Property Type="DateTime" Name="horaDeLlegada" Nullable="false" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="120" />
+          <Property Type="Decimal" Name="idAvion" Nullable="true" Precision="4" Scale="0" />
+          <Property Type="Decimal" Name="idAeropuertoOrigen" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idAeropuertoDestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="proyecto2RequeModelStoreContainer" CdmEntityContainer="proyecto2RequeEntities">
+          <EntitySetMapping Name="aeropuerto">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.aeropuerto">
+              <MappingFragment StoreEntitySet="aeropuerto">
+                <ScalarProperty Name="idaeropuerto" ColumnName="idaeropuerto" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="asiento">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.asiento">
+              <MappingFragment StoreEntitySet="asiento">
+                <ScalarProperty Name="idasiento" ColumnName="idasiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="idavion" ColumnName="idavion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="avion">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.avion">
+              <MappingFragment StoreEntitySet="avion">
+                <ScalarProperty Name="idavion" ColumnName="idavion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="paisresidencia" ColumnName="paisresidencia" />
+                <ScalarProperty Name="pasaporte" ColumnName="pasaporte" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleado">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.empleado">
+              <MappingFragment StoreEntitySet="empleado">
+                <ScalarProperty Name="idempleado" ColumnName="idempleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipaje">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.equipaje">
+              <MappingFragment StoreEntitySet="equipaje">
+                <ScalarProperty Name="idequipaje" ColumnName="idequipaje" />
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idViaje" ColumnName="idViaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pasajeabordar">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.pasajeabordar">
+              <MappingFragment StoreEntitySet="pasajeabordar">
+                <ScalarProperty Name="idpasajeabordar" ColumnName="idpasajeabordar" />
+                <ScalarProperty Name="idreservacion" ColumnName="idreservacion" />
+                <ScalarProperty Name="fchpasaje" ColumnName="fchpasaje" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservacion">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.reservacion">
+              <MappingFragment StoreEntitySet="reservacion">
+                <ScalarProperty Name="idreservacion" ColumnName="idreservacion" />
+                <ScalarProperty Name="fchreservacion" ColumnName="fchreservacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="idvuelo" ColumnName="idvuelo" />
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="contrasenna" ColumnName="contrasenna" />
+                <ScalarProperty Name="tipousuario" ColumnName="tipousuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viaje">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.viaje">
+              <MappingFragment StoreEntitySet="viaje">
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idaeropuertoorigen" ColumnName="idaeropuertoorigen" />
+                <ScalarProperty Name="idaeropuertodestino" ColumnName="idaeropuertodestino" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viajevuelo">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.viajevuelo">
+              <MappingFragment StoreEntitySet="viajevuelo">
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+                <ScalarProperty Name="idvuelo" ColumnName="idvuelo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vuelo">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.vuelo">
+              <MappingFragment StoreEntitySet="vuelo">
+                <ScalarProperty Name="idvuelo" ColumnName="idvuelo" />
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idavion" ColumnName="idavion" />
+                <ScalarProperty Name="idaeropuertoorigen" ColumnName="idaeropuertoorigen" />
+                <ScalarProperty Name="idaeropuertodestino" ColumnName="idaeropuertodestino" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="equipajevuelo" TypeName="proyecto2RequeModel.equipajevuelo" StoreEntitySet="equipajevuelo">
+            <EndProperty Name="equipaje">
+              <ScalarProperty Name="idequipaje" ColumnName="idequipaje" />
+            </EndProperty>
+            <EndProperty Name="vuelo">
+              <ScalarProperty Name="idvuelo" ColumnName="idvuelo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="lineareservacion" TypeName="proyecto2RequeModel.lineareservacion" StoreEntitySet="lineareservacion">
+            <EndProperty Name="asiento">
+              <ScalarProperty Name="idasiento" ColumnName="idasiento" />
+            </EndProperty>
+            <EndProperty Name="reservacion">
+              <ScalarProperty Name="idreservacion" ColumnName="idreservacion" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Asientos_Por_Vuelo" FunctionName="proyecto2RequeModel.Store.Asientos_Por_Vuelo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Asientos_Por_Vuelo_Result">
+                <ScalarProperty Name="idAsiento" ColumnName="idAsiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="idAvion" ColumnName="idAvion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Viajes" FunctionName="proyecto2RequeModel.Store.Viajes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Viajes_Result">
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idaeropuertoorigen" ColumnName="idaeropuertoorigen" />
+                <ScalarProperty Name="idaeropuertodestino" ColumnName="idaeropuertodestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Vuelos_Por_Viaje" FunctionName="proyecto2RequeModel.Store.Vuelos_Por_Viaje">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Vuelos_Por_Viaje_Result">
+                <ScalarProperty Name="idVuelo" ColumnName="idVuelo" />
+                <ScalarProperty Name="horaDePartida" ColumnName="horaDePartida" />
+                <ScalarProperty Name="horaDeLlegada" ColumnName="horaDeLlegada" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idAvion" ColumnName="idAvion" />
+                <ScalarProperty Name="idAeropuertoOrigen" ColumnName="idAeropuertoOrigen" />
+                <ScalarProperty Name="idAeropuertoDestino" ColumnName="idAeropuertoDestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
