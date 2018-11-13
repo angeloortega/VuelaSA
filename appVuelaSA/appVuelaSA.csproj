@@ -158,7 +158,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +248,32 @@
       <DependentUpon>modeloVuela.edmx</DependentUpon>
       <LastGenOutput>modeloVuela.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\arrivals.png" />
+    <Content Include="Resources\arrivalsGray.png" />
+    <Content Include="Resources\bogota.jpg" />
+    <Content Include="Resources\checked.png" />
+    <Content Include="Resources\clock.png" />
+    <Content Include="Resources\departures.png" />
+    <Content Include="Resources\departuresGray.png" />
+    <Content Include="Resources\descarga.jpg" />
+    <Content Include="Resources\eiffel.png" />
+    <Content Include="Resources\error.png" />
+    <Content Include="Resources\escala.png" />
+    <Content Include="Resources\hongkong.jpg" />
+    <Content Include="Resources\horaPartida.png" />
+    <Content Include="Resources\left-arrow.png" />
+    <Content Include="Resources\loginBackground.png" />
+    <Content Include="Resources\logoViajaSA.png" />
+    <Content Include="Resources\londres.JPG" />
+    <Content Include="Resources\man-user.png" />
+    <Content Include="Resources\manager.png" />
+    <Content Include="Resources\open-book.png" />
+    <Content Include="Resources\origen.png" />
+    <Content Include="Resources\pencil.png" />
+    <Content Include="Resources\plane.png" />
+    <Content Include="Resources\precio.png" />
+    <Content Include="Resources\register.png" />
+    <Content Include="Resources\sydney.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -309,10 +336,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -322,9 +346,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Administrador\MainAdministrador.cshtml" />
+    <Content Include="Views\Shared\_Layout_Cliente.cshtml" />
+    <Content Include="Views\Cliente\MainCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LogIn\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

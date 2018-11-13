@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace appVuelaSA.Controllers
 {
-    public class HomeController : Controller
+    public class AdministradorController : Controller
     {
-        public ActionResult Index()
+        public ActionResult MainAdministrador()
         {
             //prueba
             return View();

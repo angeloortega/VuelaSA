@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuela S.A.</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #fff; color: #005596;">
+        <div class="container">
+            <div class="navbar-collapse collapse" style=" color: #005596;">
+                <a href="/Adminsistrador/MainAdministrador" class="navbar-left"><img src="~/Resources/logoViajaSA.png" width="40" height="40"></a>
+                <ul class=" nav nav-pills" style=" color: #005596; padding-left: 2em;">
+                    <li>@Html.ActionLink("Inicio", "MainAdministrador", "Administrador")</li>
+                    <li>@Html.ActionLink("Registro de Pasaje", "RegistrarPasaje", "Administrador")</li>
+                    <li>@Html.ActionLink("Cerrar Sesión", "CerrarSesion", "Administrador")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Vuela S.A.</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
