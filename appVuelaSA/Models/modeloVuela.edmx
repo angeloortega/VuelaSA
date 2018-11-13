@@ -137,27 +137,6 @@
           <Property Name="idaeropuertoorigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
           <Property Name="idaeropuertodestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Vista_Viaje">
-          <Key>
-            <PropertyRef Name="idViaje" />
-            <PropertyRef Name="horaDePartida" />
-            <PropertyRef Name="horaDeLlegada" />
-            <PropertyRef Name="precio" />
-            <PropertyRef Name="descripcion" />
-            <PropertyRef Name="idAeropuertoOrigen" />
-            <PropertyRef Name="idAeropuertoDestino" />
-          </Key>
-          <Property Name="idViaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="horaDePartida" Type="date" Nullable="false" />
-          <Property Name="horaDeLlegada" Type="date" Nullable="false" />
-          <Property Name="precio" Type="numeric" Precision="5" Scale="0" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
-          <Property Name="idAeropuertoOrigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
-          <Property Name="idAeropuertoDestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
-          <Property Name="escalas" Type="int" />
-        </EntityType>
         <Association Name="asiento_avion_fk">
           <End Role="avion" Type="Self.avion" Multiplicity="1" />
           <End Role="asiento" Type="Self.asiento" Multiplicity="*" />
@@ -405,7 +384,22 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
         <Function Name="Asientos_Por_Vuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idVuelo" Type="numeric" Mode="In" />
         </Function>
+        <Function Name="Historial_Vuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idcliente" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="Proximos_Vuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCliente" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="Validar_LogIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombreUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="contrasenna" Type="varchar" Mode="In" />
+          <Parameter Name="output" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="Viajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Viajes_Por_Origen_Destino" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="origen" Type="numeric" Mode="In" />
+          <Parameter Name="destino" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="Vuelos_Por_Viaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idViaje" Type="numeric" Mode="In" />
         </Function>
@@ -424,18 +418,6 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
           <EntitySet Name="viaje" EntityType="Self.viaje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="viajevuelo" EntityType="Self.viajevuelo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vuelo" EntityType="Self.vuelo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Vista_Viaje" EntityType="Self.Vista_Viaje" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vista_Viaje].[idViaje] AS [idViaje], 
-    [Vista_Viaje].[horaDePartida] AS [horaDePartida], 
-    [Vista_Viaje].[horaDeLlegada] AS [horaDeLlegada], 
-    [Vista_Viaje].[precio] AS [precio], 
-    [Vista_Viaje].[descripcion] AS [descripcion], 
-    [Vista_Viaje].[idAeropuertoOrigen] AS [idAeropuertoOrigen], 
-    [Vista_Viaje].[idAeropuertoDestino] AS [idAeropuertoDestino], 
-    [Vista_Viaje].[escalas] AS [escalas]
-    FROM [dbo].[Vista_Viaje] AS [Vista_Viaje]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="asiento_avion_fk" Association="Self.asiento_avion_fk">
             <End Role="avion" EntitySet="avion" />
             <End Role="asiento" EntitySet="asiento" />
@@ -941,7 +923,21 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
           <FunctionImport Name="Vuelos_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Vuelos_Por_Viaje_Result)">
           <Parameter Name="idViaje" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <EntitySet Name="Vista_Viaje" EntityType="proyecto2RequeModel.Vista_Viaje" />
+          <FunctionImport Name="Validar_LogIn">
+            <Parameter Name="nombreUsuario" Mode="In" Type="String" />
+            <Parameter Name="contrasenna" Mode="In" Type="String" />
+            <Parameter Name="output" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Viajes_Por_Origen_Destino" ReturnType="Collection(proyecto2RequeModel.Viajes_Por_Origen_Destino_Result)">
+            <Parameter Name="origen" Mode="In" Type="Decimal" />
+            <Parameter Name="destino" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Historial_Vuelos" ReturnType="Collection(proyecto2RequeModel.Historial_Vuelos_Result)">
+          <Parameter Name="idcliente" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Proximos_Vuelos" ReturnType="Collection(proyecto2RequeModel.Proximos_Vuelos_Result)">
+            <Parameter Name="idCliente" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Asientos_Por_Vuelo_Result">
           <Property Type="Decimal" Name="idAsiento" Nullable="false" Precision="8" Scale="0" />
@@ -968,25 +964,27 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
           <Property Type="Decimal" Name="idAeropuertoOrigen" Nullable="false" Precision="3" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoDestino" Nullable="false" Precision="3" Scale="0" />
         </ComplexType>
-        <EntityType Name="Vista_Viaje">
-          <Key>
-            <PropertyRef Name="idViaje" />
-            <PropertyRef Name="horaDePartida" />
-            <PropertyRef Name="horaDeLlegada" />
-            <PropertyRef Name="precio" />
-            <PropertyRef Name="descripcion" />
-            <PropertyRef Name="idAeropuertoOrigen" />
-            <PropertyRef Name="idAeropuertoDestino" />
-          </Key>
-          <Property Name="idViaje" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
-          <Property Name="horaDePartida" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="horaDeLlegada" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="precio" Type="Decimal" Nullable="false" Precision="5" Scale="0" />
-          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="idAeropuertoOrigen" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
-          <Property Name="idAeropuertoDestino" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
-          <Property Name="escalas" Type="Int32" />
-        </EntityType>
+        <ComplexType Name="Viajes_Por_Origen_Destino_Result">
+          <Property Type="Decimal" Name="idviaje" Nullable="false" Precision="10" Scale="0" />
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="5" Scale="0" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="120" />
+          <Property Type="Decimal" Name="idaeropuertoorigen" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idaeropuertodestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Historial_Vuelos_Result">
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="String" Name="origen" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="destino" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="Proximos_Vuelos_Result">
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="String" Name="origen" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="destino" Nullable="false" MaxLength="60" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1173,20 +1171,40 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Vista_Viaje">
-            <EntityTypeMapping TypeName="proyecto2RequeModel.Vista_Viaje">
-              <MappingFragment StoreEntitySet="Vista_Viaje">
-                <ScalarProperty Name="escalas" ColumnName="escalas" />
-                <ScalarProperty Name="idAeropuertoDestino" ColumnName="idAeropuertoDestino" />
-                <ScalarProperty Name="idAeropuertoOrigen" ColumnName="idAeropuertoOrigen" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <FunctionImportMapping FunctionImportName="Validar_LogIn" FunctionName="proyecto2RequeModel.Store.Validar_LogIn" />
+          <FunctionImportMapping FunctionImportName="Viajes_Por_Origen_Destino" FunctionName="proyecto2RequeModel.Store.Viajes_Por_Origen_Destino">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Viajes_Por_Origen_Destino_Result">
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
                 <ScalarProperty Name="precio" ColumnName="precio" />
-                <ScalarProperty Name="horaDeLlegada" ColumnName="horaDeLlegada" />
-                <ScalarProperty Name="horaDePartida" ColumnName="horaDePartida" />
-                <ScalarProperty Name="idViaje" ColumnName="idViaje" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idaeropuertoorigen" ColumnName="idaeropuertoorigen" />
+                <ScalarProperty Name="idaeropuertodestino" ColumnName="idaeropuertodestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Historial_Vuelos" FunctionName="proyecto2RequeModel.Store.Historial_Vuelos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Historial_Vuelos_Result">
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proximos_Vuelos" FunctionName="proyecto2RequeModel.Store.Proximos_Vuelos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Proximos_Vuelos_Result">
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

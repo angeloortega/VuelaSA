@@ -160,6 +160,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\LogInController.cs" />
+    <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +186,10 @@
     <Compile Include="Models\equipaje.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Historial.cs" />
+    <Compile Include="Models\Historial_Vuelos_Result.cs">
+      <DependentUpon>modeloVuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\modeloVuela.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,6 +208,11 @@
     <Compile Include="Models\pasajeabordar.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Perfil.cs" />
+    <Compile Include="Models\Proximos_Vuelos_Result.cs">
+      <DependentUpon>modeloVuela.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\registro.cs" />
     <Compile Include="Models\reservacion.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
@@ -211,7 +222,6 @@
     <Compile Include="Models\viaje.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViajeCustom.cs" />
     <Compile Include="Models\Viajes_Result.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
@@ -353,12 +363,9 @@
     <Content Include="Views\Administrador\MainAdministrador.cshtml" />
     <Content Include="Views\Shared\_Layout_Cliente.cshtml" />
     <Content Include="Views\Cliente\MainCliente.cshtml" />
-    <Content Include="Views\Cliente\Itinerario.cshtml" />
-    <Content Include="Views\Cliente\Boletos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\LogIn\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

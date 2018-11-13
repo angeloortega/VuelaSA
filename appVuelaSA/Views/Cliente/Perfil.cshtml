@@ -1,0 +1,94 @@
+﻿@model appVuelaSA.Models.Perfil
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_Layout_Cliente.cshtml";
+}
+
+<h2>Perfil</h2>
+
+<h3>Próximos vuelos</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Fecha de salida")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de llegada")
+        </th>
+        <th>
+            @Html.DisplayName("Origen")
+        </th>
+        <th>
+            @Html.DisplayName("Destino")
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model.proximos)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.horapartida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horallegada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.origen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.destino)
+            </td>
+            <td>
+                @Html.ActionLink("Check-in", "Checkin", new { id = item.id }) |
+                @Html.ActionLink("Cambiar", "CambiarVuelo", new { id = item.id }) |
+                @Html.ActionLink("Cancelar", "CancelarVuelo", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h3>Historial de vuelos</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Fecha de salida")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de llegada")
+        </th>
+        <th>
+            @Html.DisplayName("Origen")
+        </th>
+        <th>
+            @Html.DisplayName("Destino")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.historial)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.horapartida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horallegada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.origen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.destino)
+            </td>
+        </tr>
+    }
+
+</table>
+
+        

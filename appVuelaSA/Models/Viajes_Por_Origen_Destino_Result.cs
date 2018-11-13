@@ -11,7 +11,7 @@ namespace appVuelaSA.Models
 {
     using System;
     
-    public partial class Viajes_Result
+    public partial class Viajes_Por_Origen_Destino_Result
     {
         public decimal idviaje { get; set; }
         public System.DateTime horadepartida { get; set; }
