@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aeropuerto">
           <Key>
             <PropertyRef Name="idaeropuerto" />
@@ -101,9 +101,9 @@
             <PropertyRef Name="idusuario" />
           </Key>
           <Property Name="idusuario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="contrasenna" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="tipousuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
         </EntityType>
         <EntityType Name="viaje">
           <Key>
@@ -136,6 +136,27 @@
           <Property Name="idavion" Type="numeric" Precision="4" Scale="0" />
           <Property Name="idaeropuertoorigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
           <Property Name="idaeropuertodestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vista_Viaje">
+          <Key>
+            <PropertyRef Name="idViaje" />
+            <PropertyRef Name="horaDePartida" />
+            <PropertyRef Name="horaDeLlegada" />
+            <PropertyRef Name="precio" />
+            <PropertyRef Name="descripcion" />
+            <PropertyRef Name="idAeropuertoOrigen" />
+            <PropertyRef Name="idAeropuertoDestino" />
+          </Key>
+          <Property Name="idViaje" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="horaDePartida" Type="date" Nullable="false" />
+          <Property Name="horaDeLlegada" Type="date" Nullable="false" />
+          <Property Name="precio" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="idAeropuertoOrigen" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="idAeropuertoDestino" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="escalas" Type="int" />
         </EntityType>
         <Association Name="asiento_avion_fk">
           <End Role="avion" Type="Self.avion" Multiplicity="1" />
@@ -403,6 +424,18 @@
           <EntitySet Name="viaje" EntityType="Self.viaje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="viajevuelo" EntityType="Self.viajevuelo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vuelo" EntityType="Self.vuelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vista_Viaje" EntityType="Self.Vista_Viaje" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vista_Viaje].[idViaje] AS [idViaje], 
+    [Vista_Viaje].[horaDePartida] AS [horaDePartida], 
+    [Vista_Viaje].[horaDeLlegada] AS [horaDeLlegada], 
+    [Vista_Viaje].[precio] AS [precio], 
+    [Vista_Viaje].[descripcion] AS [descripcion], 
+    [Vista_Viaje].[idAeropuertoOrigen] AS [idAeropuertoOrigen], 
+    [Vista_Viaje].[idAeropuertoDestino] AS [idAeropuertoDestino], 
+    [Vista_Viaje].[escalas] AS [escalas]
+    FROM [dbo].[Vista_Viaje] AS [Vista_Viaje]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="asiento_avion_fk" Association="Self.asiento_avion_fk">
             <End Role="avion" EntitySet="avion" />
             <End Role="asiento" EntitySet="asiento" />
@@ -476,8 +509,7 @@
             <End Role="vuelo" EntitySet="vuelo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="proyecto2RequeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -903,12 +935,13 @@
             <End Role="reservacion" EntitySet="reservacion" />
           </AssociationSet>
           <FunctionImport Name="Asientos_Por_Vuelo" ReturnType="Collection(proyecto2RequeModel.Asientos_Por_Vuelo_Result)">
-            <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
+          <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Viajes" ReturnType="Collection(proyecto2RequeModel.Viajes_Result)" />
           <FunctionImport Name="Vuelos_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Vuelos_Por_Viaje_Result)">
-            <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          <Parameter Name="idViaje" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="Vista_Viaje" EntityType="proyecto2RequeModel.Vista_Viaje" />
         </EntityContainer>
         <ComplexType Name="Asientos_Por_Vuelo_Result">
           <Property Type="Decimal" Name="idAsiento" Nullable="false" Precision="8" Scale="0" />
@@ -935,6 +968,25 @@
           <Property Type="Decimal" Name="idAeropuertoOrigen" Nullable="false" Precision="3" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoDestino" Nullable="false" Precision="3" Scale="0" />
         </ComplexType>
+        <EntityType Name="Vista_Viaje">
+          <Key>
+            <PropertyRef Name="idViaje" />
+            <PropertyRef Name="horaDePartida" />
+            <PropertyRef Name="horaDeLlegada" />
+            <PropertyRef Name="precio" />
+            <PropertyRef Name="descripcion" />
+            <PropertyRef Name="idAeropuertoOrigen" />
+            <PropertyRef Name="idAeropuertoDestino" />
+          </Key>
+          <Property Name="idViaje" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="horaDePartida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="horaDeLlegada" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="5" Scale="0" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="idAeropuertoOrigen" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
+          <Property Name="idAeropuertoDestino" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
+          <Property Name="escalas" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1121,6 +1173,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Vista_Viaje">
+            <EntityTypeMapping TypeName="proyecto2RequeModel.Vista_Viaje">
+              <MappingFragment StoreEntitySet="Vista_Viaje">
+                <ScalarProperty Name="escalas" ColumnName="escalas" />
+                <ScalarProperty Name="idAeropuertoDestino" ColumnName="idAeropuertoDestino" />
+                <ScalarProperty Name="idAeropuertoOrigen" ColumnName="idAeropuertoOrigen" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="horaDeLlegada" ColumnName="horaDeLlegada" />
+                <ScalarProperty Name="horaDePartida" ColumnName="horaDePartida" />
+                <ScalarProperty Name="idViaje" ColumnName="idViaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

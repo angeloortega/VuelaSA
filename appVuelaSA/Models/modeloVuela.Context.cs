@@ -39,6 +39,7 @@ namespace appVuelaSA.Models
         public virtual DbSet<viaje> viaje { get; set; }
         public virtual DbSet<viajevuelo> viajevuelo { get; set; }
         public virtual DbSet<vuelo> vuelo { get; set; }
+        public virtual DbSet<Vista_Viaje> Vista_Viaje { get; set; }
     
         public virtual ObjectResult<Asientos_Por_Vuelo_Result> Asientos_Por_Vuelo(Nullable<decimal> idVuelo)
         {
