@@ -1,18 +1,66 @@
-﻿@{
+﻿
+@model IEnumerable<appVuelaSA.Models.reservacion>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
     ViewBag.Title = "MainAdministrador";
     Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Control de Vuelos</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+@using (Html.BeginForm("MainAdministrador", "Administrador", FormMethod.Get))
+{
+    <p>
+        Cliente @Html.TextBox("cliente", ViewBag.CurrentFilter as string)
+        Viaje @Html.TextBox("viaje", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Buscar" />
+    </p>
+}
+<div style="height: 550px; overflow: auto;">
+    <table class="table">
+        <tr>
+            <th>
+                Número de reservación
+            </th>
+
+            <th>
+                Número de cliente
+            </th>
+            <th>
+                Número de viaje
+            </th>
+            <th>
+                Estado de reservación
+            </th>
+            <th>
+                Fecha de reservación
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idreservacion)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idcliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idviaje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fchreservacion)
+                </td>
+                <td>
+                    @Html.ActionLink("Realizar check-in", "Checkin", new { id = item.idreservacion })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br />

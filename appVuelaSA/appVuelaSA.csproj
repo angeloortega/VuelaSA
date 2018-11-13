@@ -222,6 +222,7 @@
     <Compile Include="Models\viaje.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViajeCustom.cs" />
     <Compile Include="Models\Viajes_Por_Origen_Destino_Result.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
@@ -229,6 +230,9 @@
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\viajevuelo.cs">
+      <DependentUpon>modeloVuela.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vista_Viaje.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vuelo.cs">
@@ -254,8 +258,8 @@
     </Content>
     <Content Include="Models\modeloVuela.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>modeloVuela.Context.cs</LastGenOutput>
       <DependentUpon>modeloVuela.edmx</DependentUpon>
+      <LastGenOutput>modeloVuela.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\modeloVuela.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -369,6 +373,10 @@
     <Content Include="Views\Administrador\RegistrarPase.cshtml" />
     <Content Include="Views\Cliente\Perfil.cshtml" />
     <Content Include="Views\Cliente\CambiarVuelo.cshtml" />
+    <Content Include="Views\Cliente\Boletos.cshtml" />
+    <Content Include="Views\Cliente\Itinerario.cshtml" />
+    <Content Include="Views\Shared\_Layout_Login.cshtml" />
+    <Content Include="Views\Cliente\CancelarVuelo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

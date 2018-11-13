@@ -10,7 +10,7 @@ namespace appVuelaSA.Controllers
 {
     public class LogInController : Controller
     {
-        private proyecto2RequeEntities db = new proyecto2RequeEntities();
+        private proyectoRequeEntities db = new proyectoRequeEntities();
 
         public ActionResult Login()
         {
@@ -33,26 +33,34 @@ namespace appVuelaSA.Controllers
             string nombreUsuario = solicitud["nombre"].ToString();
             string contrasenna = solicitud["contrasenna"].ToString();
 
-
-            int output = db.Validar_LogIn(nombreUsuario, contrasenna, new System.Data.Entity.Core.Objects.ObjectParameter("output", 0));
-
-            Console.WriteLine(output);
-
-            Session["IDUsuario"] = 1;
-            
-            if (nombreUsuario.Equals("richBoy")) //(output == 1)
-            {
-                //empleado
-                return RedirectToAction("MainAdministrator", "Administrator");
+            var users = from m in db.usuario
+                        select m;
+            users = users.Where(m => m.nombre == nombreUsuario);
+            if (users.Count() < 1){
+                return View("Login");
             }
-            else
+            usuario usr = users.First();
+
+            if (contrasenna == usr.contrasenna)
             {
-                //cliente
-                return RedirectToAction("MainCliente", "Cliente");
+                Console.WriteLine("estoy vivo joder");
+                Session["IDUsuario"] = usr.idusuario;
+
+                if (usr.tipousuario.Equals("Empleado"))
+                {
+                    //empleado
+                    return RedirectToAction("MainAdministrador", "Administrador");
+                }
+                else
+                {
+                    //cliente
+                    return RedirectToAction("MainCliente", "Cliente");
+                }
+
             }
-            
-
-
+            else {
+                return View("Login");
+            }
         }
 
         [HttpPost]
@@ -66,19 +74,15 @@ namespace appVuelaSA.Controllers
                 usr.nombre = solicitud["usuario"].ToString();
                 usr.contrasenna = solicitud["contrasenna"].ToString();
                 usr.tipousuario = "Cliente";
-
+                usr.idusuario = Int32.Parse(solicitud["pasaporte"]);
                 cli.nombre = solicitud["nombre"].ToString();
                 cli.paisresidencia = solicitud["paisResidencia"].ToString();
                 cli.pasaporte = solicitud["pasaporte"].ToString();
                 cli.correo = solicitud["correo"].ToString();
-
+                cli.idcliente = Int32.Parse(solicitud["pasaporte"]);
+                cli.idusuario = Int32.Parse(solicitud["pasaporte"]);
                 db.usuario.Add(usr);
-
-                var result = db.usuario.SqlQuery("SELECT * FROM dbo.usuario WHERE nombre = @usuario", new SqlParameter("@usuario", usr.nombre));
-                usuario temp = result.First();
-
-                cli.idusuario = temp.idusuario;
-
+                db.SaveChanges();
                 db.cliente.Add(cli);
                 db.SaveChanges();
                 return View("Signin");
@@ -106,21 +110,14 @@ namespace appVuelaSA.Controllers
                 usr.nombre = solicitud["usuario"].ToString();
                 usr.contrasenna = solicitud["contrasenna"].ToString();
                 usr.tipousuario = "Empleado";
-
                 emp.nombre = solicitud["nombre"].ToString();
                 emp.idempleado = Convert.ToDecimal(solicitud["id"].ToString());
-
                 db.usuario.Add(usr);
-
-                var result = db.usuario.SqlQuery("SELECT * FROM dbo.usuario WHERE nombre = @usuario)", new SqlParameter("@usuario", usr.nombre));
-                usuario temp = result.First();
-
-                emp.idusuario = temp.idusuario;
-
+                emp.idusuario = Convert.ToDecimal(solicitud["id"].ToString());
                 db.empleado.Add(emp);
                 db.SaveChanges();
 
-                return RedirectToAction("MainAdministrator", "Administrator");
+                return RedirectToAction("MainAdministrador", "Administrador");
             }
             catch (Exception e)
             {

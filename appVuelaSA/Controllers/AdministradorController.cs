@@ -10,26 +10,43 @@ namespace appVuelaSA.Controllers
 {
     public class AdministradorController : Controller
     {
-        private proyecto2RequeEntities db = new proyecto2RequeEntities();
+        private proyectoRequeEntities db = new proyectoRequeEntities();
 
-        public ActionResult MainAdministrador()
+        public ActionResult MainAdministrador(string cliente, string viaje)
         {
-            //prueba
-            return View();
-        }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var res = from m in db.reservacion
+                        select m;
+            List<reservacion> reservaciones = res.ToList();
+            List<reservacion> nuevasReservaciones;
+            if (!String.IsNullOrEmpty(cliente))
+            {
+                int clienteInt = Int32.Parse(cliente);
+                nuevasReservaciones = new List<reservacion>();
+                foreach (reservacion v in reservaciones)
+                {
+                    if (v.idcliente == clienteInt)
+                    {
+                        nuevasReservaciones.Add(v);
+                    }
+                }
+                reservaciones = nuevasReservaciones;
+            }
+            if (!String.IsNullOrEmpty(viaje))
+            {
+                int viajeInt = Int32.Parse(viaje);
+                nuevasReservaciones = new List<reservacion>();
+                foreach (reservacion v in reservaciones)
+                {
+                    if (v.idviaje == viajeInt)
+                    {
+                        nuevasReservaciones.Add(v);
+                    }
+                }
+                    reservaciones = nuevasReservaciones;
+            }
+            var resv = reservaciones.OrderByDescending(s => s.idreservacion);
+            return View(resv);
         }
 
         public ActionResult RegistrarPase()

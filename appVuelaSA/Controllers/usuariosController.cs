@@ -12,7 +12,7 @@ namespace appVuelaSA.Controllers
 {
     public class usuariosController : Controller
     {
-        private proyecto2RequeEntities db = new proyecto2RequeEntities();
+        private proyectoRequeEntities db = new proyectoRequeEntities();
 
         // GET: usuarios
         public ActionResult Index()

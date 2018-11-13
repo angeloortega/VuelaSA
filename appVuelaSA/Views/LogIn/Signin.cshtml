@@ -1,8 +1,10 @@
 ﻿@model appVuelaSA.Models.registro
-
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+   }
 <h2>Registro</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Signin", "LogIn"))
 {
     @Html.AntiForgeryToken()
 
