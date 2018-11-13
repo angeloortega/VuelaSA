@@ -11,14 +11,11 @@ namespace appVuelaSA.Models
 {
     using System;
     
-    public partial class Viajes_Result
+    public partial class Proximos_Vuelos_Result
     {
-        public decimal idviaje { get; set; }
         public System.DateTime horadepartida { get; set; }
         public System.DateTime horadellegada { get; set; }
-        public decimal precio { get; set; }
-        public string descripcion { get; set; }
-        public decimal idaeropuertoorigen { get; set; }
-        public decimal idaeropuertodestino { get; set; }
+        public string origen { get; set; }
+        public string destino { get; set; }
     }
 }

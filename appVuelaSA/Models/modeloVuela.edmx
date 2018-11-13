@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aeropuerto">
           <Key>
             <PropertyRef Name="idaeropuerto" />
@@ -101,9 +101,9 @@
             <PropertyRef Name="idusuario" />
           </Key>
           <Property Name="idusuario" Type="numeric" Precision="8" Scale="0" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="contrasenna" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="tipousuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" Nullable="false" />
         </EntityType>
         <EntityType Name="viaje">
           <Key>
@@ -384,7 +384,22 @@
         <Function Name="Asientos_Por_Vuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idVuelo" Type="numeric" Mode="In" />
         </Function>
+        <Function Name="Historial_Vuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idcliente" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="Proximos_Vuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCliente" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="Validar_LogIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombreUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="contrasenna" Type="varchar" Mode="In" />
+          <Parameter Name="output" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="Viajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Viajes_Por_Origen_Destino" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="origen" Type="numeric" Mode="In" />
+          <Parameter Name="destino" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="Vuelos_Por_Viaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idViaje" Type="numeric" Mode="In" />
         </Function>
@@ -476,8 +491,7 @@
             <End Role="vuelo" EntitySet="vuelo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="proyecto2RequeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -903,11 +917,26 @@
             <End Role="reservacion" EntitySet="reservacion" />
           </AssociationSet>
           <FunctionImport Name="Asientos_Por_Vuelo" ReturnType="Collection(proyecto2RequeModel.Asientos_Por_Vuelo_Result)">
-            <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
+          <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Viajes" ReturnType="Collection(proyecto2RequeModel.Viajes_Result)" />
           <FunctionImport Name="Vuelos_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Vuelos_Por_Viaje_Result)">
-            <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Validar_LogIn">
+            <Parameter Name="nombreUsuario" Mode="In" Type="String" />
+            <Parameter Name="contrasenna" Mode="In" Type="String" />
+            <Parameter Name="output" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Viajes_Por_Origen_Destino" ReturnType="Collection(proyecto2RequeModel.Viajes_Por_Origen_Destino_Result)">
+            <Parameter Name="origen" Mode="In" Type="Decimal" />
+            <Parameter Name="destino" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Historial_Vuelos" ReturnType="Collection(proyecto2RequeModel.Historial_Vuelos_Result)">
+          <Parameter Name="idcliente" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Proximos_Vuelos" ReturnType="Collection(proyecto2RequeModel.Proximos_Vuelos_Result)">
+            <Parameter Name="idCliente" Mode="In" Type="Decimal" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Asientos_Por_Vuelo_Result">
@@ -934,6 +963,27 @@
           <Property Type="Decimal" Name="idAvion" Nullable="true" Precision="4" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoOrigen" Nullable="false" Precision="3" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoDestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Viajes_Por_Origen_Destino_Result">
+          <Property Type="Decimal" Name="idviaje" Nullable="false" Precision="10" Scale="0" />
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="5" Scale="0" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="120" />
+          <Property Type="Decimal" Name="idaeropuertoorigen" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idaeropuertodestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Historial_Vuelos_Result">
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="String" Name="origen" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="destino" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="Proximos_Vuelos_Result">
+          <Property Type="DateTime" Name="horadepartida" Nullable="false" />
+          <Property Type="DateTime" Name="horadellegada" Nullable="false" />
+          <Property Type="String" Name="origen" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="destino" Nullable="false" MaxLength="60" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1118,6 +1168,40 @@
                 <ScalarProperty Name="idAvion" ColumnName="idAvion" />
                 <ScalarProperty Name="idAeropuertoOrigen" ColumnName="idAeropuertoOrigen" />
                 <ScalarProperty Name="idAeropuertoDestino" ColumnName="idAeropuertoDestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Validar_LogIn" FunctionName="proyecto2RequeModel.Store.Validar_LogIn" />
+          <FunctionImportMapping FunctionImportName="Viajes_Por_Origen_Destino" FunctionName="proyecto2RequeModel.Store.Viajes_Por_Origen_Destino">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Viajes_Por_Origen_Destino_Result">
+                <ScalarProperty Name="idviaje" ColumnName="idviaje" />
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idaeropuertoorigen" ColumnName="idaeropuertoorigen" />
+                <ScalarProperty Name="idaeropuertodestino" ColumnName="idaeropuertodestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Historial_Vuelos" FunctionName="proyecto2RequeModel.Store.Historial_Vuelos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Historial_Vuelos_Result">
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proximos_Vuelos" FunctionName="proyecto2RequeModel.Store.Proximos_Vuelos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Proximos_Vuelos_Result">
+                <ScalarProperty Name="horadepartida" ColumnName="horadepartida" />
+                <ScalarProperty Name="horadellegada" ColumnName="horadellegada" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
