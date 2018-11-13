@@ -64,16 +64,16 @@ namespace appVuelaSA.Controllers
 
                 pasajeabordar pasaje = db.pasajeabordar.Find(idpasaje);
 
-                pasaje.estado = "Registrado";
+                pasaje.estado = "Sellado";
 
                 db.Entry(pasaje).State = EntityState.Modified;
                 db.SaveChanges();
-                return View("MainAdministrador");
+                return RedirectToAction("MainAdministrador");
 
             }
             catch(Exception e)
             {
-                return View("RegistrarPase");
+                return RedirectToAction("RegistrarPase");
             }
 
             

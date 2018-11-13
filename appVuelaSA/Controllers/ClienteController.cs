@@ -32,10 +32,10 @@ namespace appVuelaSA.Controllers
                 AeropuertoDestino = aereopuertos.Where(s => s.idaeropuerto == trip.idAeropuertoDestino).First();
                 newVuelo.origen = AeropuertoOrigen;
                 newVuelo.destino = AeropuertoDestino;
-               // if ((trip.horaDePartida - DateTime.Now).TotalHours > 24)
-               // {
+                if ((trip.horaDePartida - DateTime.Now).TotalHours > 24)
+               {
                     vuelos.Add(newVuelo);
-               // }
+               }
             }
             List<ViajeCustom> nuevosViajes;
             if (!String.IsNullOrEmpty(origen))
