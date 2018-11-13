@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<appVuelaSA.Models.vuelo>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Boletos";
+    Layout = "~/Views/Shared/_Layout_Cliente.cshtml";
+}
+
+<h2>Seleccion de Asientos</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div>
+
+        <!-- Tab panes -->
+    <div class="tab-content">
+        <label class="col-xs-3 control-label">Tipo de asiento</label>
+        <div class="col-xs-5 selectContainer">
+            <select class="form-control" name="size" runat="server">
+                <option value="ejecutivo">Clase Ejecutiva</option>
+                <option value="economico">Clase Economica</option>
+            </select>
+        </div>
+    </div>
+    </div>
+
+    <div>
+        <input type="submit" value="Confirmar Compra" class="btn btn-default" />
+    </div>
+    <br />
+}

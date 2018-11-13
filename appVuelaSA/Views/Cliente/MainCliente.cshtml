@@ -1,18 +1,80 @@
-﻿@{
+﻿
+@model IEnumerable<appVuelaSA.Models.ViajeCustom>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
     ViewBag.Title = "MainCliente";
     Layout = "~/Views/Shared/_Layout_Cliente.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Vuelos Disponibles</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+
+@using (Html.BeginForm("MainCliente", "Cliente", FormMethod.Get))
+{
+<p>
+    origen @Html.TextBox("origen", ViewBag.CurrentFilter as string)
+    destino @Html.TextBox("destino", ViewBag.CurrentFilter as string)
+
+    <input type="submit" value="Buscar" />
+</p>
+}
+<div style="height: 550px; overflow: auto;">
+    <table class="table">
+        <tr>
+            <th>
+                Número de vuelo
+            </th>
+
+            <th>
+                Fecha de llegada
+            </th>
+            <th>
+                Fecha de partida
+            </th>
+            <th>
+                Cantidad de escalas
+            </th>
+            <th>
+                Origen 
+            </th>
+            <th>
+                Destino
+            </th>
+            <th>
+                Precio
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.viajeDetails.idViaje)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.viajeDetails.horaDeLlegada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.viajeDetails.horaDePartida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.viajeDetails.escalas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.origen.ciudad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destino.ciudad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.viajeDetails.precio)
+                </td>
+                <td>
+                    @Html.ActionLink("Ver Detalles", "Itinerario", new { id = item.viajeDetails.idViaje })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br />

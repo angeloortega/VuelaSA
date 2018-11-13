@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<appVuelaSA.Models.Vuelos_Por_Viaje_Result>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Itinerario";
+    Layout = "~/Views/Shared/_Layout_Cliente.cshtml";
+}
+
+<h2>Itinerario de Vuelo</h2>
+@using (Html.BeginForm())
+{   
+    @Html.AntiForgeryToken()
+    <div style="height: 550px; overflow: auto;">
+        <table class="table">
+            <tr>
+                <th>
+                    Número de vuelo
+                </th>
+
+                <th>
+                    Fecha de llegada
+                </th>
+                <th>
+                    Fecha de partida
+                </th>
+                <th>
+                    Número de avión
+                </th>
+                <th>
+                    Origen
+                </th>
+                <th>
+                    Destino
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idVuelo)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.horaDeLlegada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.horaDePartida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idAvion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idAeropuertoDestino)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idAeropuertoOrigen)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <input type="hidden" value="@ViewBag.idViaje" name="idViaje" />
+        <input type="submit" value="Comprar Tiquetes" class="btn btn-default" />
+    </div>
+    <br />
+}

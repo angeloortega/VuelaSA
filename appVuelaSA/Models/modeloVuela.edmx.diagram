@@ -33,6 +33,7 @@
         <AssociationConnector Association="proyecto2RequeModel.viajevuelo_vuelo_fk" ManuallyRouted="false" />
         <AssociationConnector Association="proyecto2RequeModel.equipajevuelo" ManuallyRouted="false" />
         <AssociationConnector Association="proyecto2RequeModel.lineareservacion" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="proyecto2RequeModel.Vista_Viaje" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
