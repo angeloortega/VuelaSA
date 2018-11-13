@@ -1,0 +1,49 @@
+﻿@model appVuelaSA.Models.reservacion
+
+@{
+    ViewBag.Title = "CheckinAdmin";
+}
+
+<h2>Check-in</h2>
+
+<h3>¿Desea hacer check-in para esta reservacion?</h3>
+<div>
+    <h4>Reservacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Fecha de Reservacion
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fchreservacion)
+        </dd>
+
+        <dt>
+            Ciudad de origen
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.viajevuelo.viaje.aeropuerto.ciudad)
+        </dd>
+
+        <dt>
+            Ciudad de destino
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.viajevuelo.viaje.aeropuerto1.ciudad)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirmar" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

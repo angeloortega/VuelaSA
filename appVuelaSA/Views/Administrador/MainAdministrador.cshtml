@@ -57,7 +57,9 @@
                     @Html.DisplayFor(modelItem => item.fchreservacion)
                 </td>
                 <td>
-                    @Html.ActionLink("Realizar check-in", "Checkin", new { id = item.idreservacion })
+                    @Html.ActionLink("Realizar check-in", "CheckinAdmin", new { id = item.idreservacion })
+                    @Html.ActionLink("Registrar equipaje", "AgregarEquipaje", new { idReservacion = item.idreservacion })
+
                 </td>
             </tr>
         }

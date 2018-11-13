@@ -1,8 +1,8 @@
-﻿
-@model IEnumerable<appVuelaSA.Models.Asientos_Disoponibles_Por_Viaje_Result>
+﻿@model IEnumerable<appVuelaSA.Models.Asientos_Disoponibles_Por_Viaje_Result>
 @{
-    ViewBag.Title = "Boletos";
+    ViewBag.Title = "CambiarAsientos";
     Layout = "~/Views/Shared/_Layout_Cliente.cshtml";
+
 }
 
 <h2>Seleccion de Asientos</h2>
@@ -65,24 +65,24 @@
                     columna = (int)item.idasiento % 15;
                 }
 
-            <tr>
-                <td>
-                    @fila
+                <tr>
+                    <td>
+                        @fila
 
-                </td>
-                <td>
-                    @columna
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.categoria)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.precio)
-                </td>
-                <td>
-                    @Html.ActionLink("Comprar Boleto", "ComprarBoleto", new { id = item.idasiento })
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        @columna
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.categoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precio)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Cambiar Boleto", "CambiarBoleto", new { id = item.idasiento })
+                    </td>
+                </tr>
             }
         </table>
     </div>

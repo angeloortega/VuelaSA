@@ -171,6 +171,9 @@
     <Compile Include="Models\asiento.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Asientos_Disoponibles_Por_Viaje_Result.cs">
+      <DependentUpon>modeloVuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Asientos_Por_Vuelo_Result.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
@@ -216,6 +219,7 @@
     <Compile Include="Models\reservacion.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReservacionAsiento.cs" />
     <Compile Include="Models\usuario.cs">
       <DependentUpon>modeloVuela.tt</DependentUpon>
     </Compile>
@@ -268,6 +272,7 @@
     </Content>
     <Content Include="Resources\arrivals.png" />
     <Content Include="Resources\arrivalsGray.png" />
+    <Content Include="Resources\avion.png" />
     <Content Include="Resources\bogota.jpg" />
     <Content Include="Resources\checked.png" />
     <Content Include="Resources\clock.png" />
@@ -377,6 +382,10 @@
     <Content Include="Views\Cliente\Itinerario.cshtml" />
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
     <Content Include="Views\Cliente\CancelarVuelo.cshtml" />
+    <Content Include="Views\Cliente\Checkin.cshtml" />
+    <Content Include="Views\Cliente\CambiarAsientos.cshtml" />
+    <Content Include="Views\Administrador\AgregarEquipaje.cshtml" />
+    <Content Include="Views\Administrador\CheckinAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

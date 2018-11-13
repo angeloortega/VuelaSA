@@ -32,7 +32,10 @@ namespace appVuelaSA.Controllers
                 AeropuertoDestino = aereopuertos.Where(s => s.idaeropuerto == trip.idAeropuertoDestino).First();
                 newVuelo.origen = AeropuertoOrigen;
                 newVuelo.destino = AeropuertoDestino;
-                vuelos.Add(newVuelo);
+               // if ((trip.horaDePartida - DateTime.Now).TotalHours > 24)
+               // {
+                    vuelos.Add(newVuelo);
+               // }
             }
             List<ViajeCustom> nuevosViajes;
             if (!String.IsNullOrEmpty(origen))
@@ -80,12 +83,59 @@ namespace appVuelaSA.Controllers
         }
 
         public ActionResult Boletos() {
-            List<vuelo> vuelos = (List<vuelo>) TempData["vuelos"];
-            return View(vuelos);
+            int id = (int) TempData["idVuelo"];
+            SqlParameter parametro1 = new SqlParameter("@idViaje", id);
+            var listaAsientos = bd.Database.SqlQuery<Asientos_Disoponibles_Por_Viaje_Result>("exec dbo.Asientos_Disoponibles_Por_Viaje @idViaje", parametro1);
+            if (listaAsientos == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idviaje = id.ToString();
+            TempData["idVuelo"] = id;
+            return View(listaAsientos.ToList());
         }
+        public ActionResult CambiarAsientos()
+        {
+            int id = (int)TempData["idVuelo"];
+            int idViejo = (int)TempData["idAsientoViejo"];
+            SqlParameter parametro1 = new SqlParameter("@idViaje", id);
+            var listaAsientos = bd.Database.SqlQuery<Asientos_Disoponibles_Por_Viaje_Result>("exec dbo.Asientos_Disoponibles_Por_Viaje @idViaje", parametro1);
+            if (listaAsientos == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idviaje = id.ToString();
+            TempData["idVuelo"] = id;
+            TempData["idAsientoViejo"] = idViejo;
+            return View(listaAsientos.ToList());
+        }
+        public ActionResult CambiarBoleto(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                SqlParameter parametro1 = new SqlParameter("@idCliente", TempData["idVuelo"]);
+                SqlParameter parametro2 = new SqlParameter("@idAsientoNuevo", id);
+                SqlParameter parametro3 = new SqlParameter("@idAsientoViejo", TempData["idAsientoViejo"]);
+                bd.Database.ExecuteSqlCommand("exec dbo.ReservarAsiento @idCliente, @idAsientoNuevo, @idAsientoViejo", parametro1, parametro2, parametro3);
 
+                return RedirectToAction("MainCliente");
+            }
+            return RedirectToAction("MainCliente");
+        }
+        public ActionResult ComprarBoleto(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                SqlParameter parametro1 = new SqlParameter("@idCliente", Session["IDUsuario"]);
+                SqlParameter parametro2 = new SqlParameter("@idViaje", TempData["idVuelo"]);
+                SqlParameter parametro3 = new SqlParameter("@idAsiento", id);
+                bd.Database.ExecuteSqlCommand("exec dbo.ReservarAsiento @idCliente, @idViaje, @idAsiento", parametro1,parametro2,parametro3);
+
+                return RedirectToAction("MainCliente");
+            }
+            return RedirectToAction("MainCliente");
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Itinerario(string idViaje)
         {
             int identificador = Int32.Parse(idViaje);
@@ -168,20 +218,43 @@ namespace appVuelaSA.Controllers
             }
             ViewBag.idvuelo = new SelectList(bd.reservacion, "idvuelo", "idvuelo");
             ViewBag.idviaje = new SelectList(bd.reservacion, "idviaje", "idviaje");
+            TempData["idAsientoViejo"] = (int) res.asiento.First().idasiento;
+
             return View();
+
         }
 
         [HttpPost]
         public ActionResult CambiarVuelo(FormCollection collection)
         {
-            reservacion res = new reservacion();
-            res.idcliente = Convert.ToDecimal(collection["idcliente"].ToString());
-            res.idviaje = Convert.ToDecimal(collection["idviaje"].ToString());
-            res.idvuelo = Convert.ToDecimal(collection["idvuelo"].ToString());
-
-            bd.reservacion.Add(res);
-
-            return View("EscogerAsientos");
+            int idViejo = (int)TempData["idAsientoViejo"];
+            TempData["idAsientoViejo"] = idViejo;
+            TempData["idVuelo"] = Convert.ToInt32(collection["idviaje"].ToString());
+            return RedirectToAction("CambiarAsientos");
         }
+        public ActionResult Checkin(int id)
+        {
+            reservacion res = bd.reservacion.Find(id);
+            if ((res.viajevuelo.viaje.horadepartida - DateTime.Now).TotalHours > 24)
+            {
+                return RedirectToAction("MainCliente");
+            }
+            if (res == null)
+            {
+                return HttpNotFound();
+            }
+            return View(res);
+        }
+        [HttpPost, ActionName("Checkin")]
+        public ActionResult CheckinConfirmed(int id)
+        {
+            reservacion res = bd.reservacion.Find(id);
+            SqlParameter parametro1 = new SqlParameter("@idViaje", res.idviaje);
+            SqlParameter parametro2 = new SqlParameter("@idCliente", Session["IDUsuario"]);
+            bd.Database.ExecuteSqlCommand("exec dbo.Check_In_Viaje @idViaje, @idCliente", parametro1, parametro2);
+            return RedirectToAction("MainCliente");
+        }
+
     }
+        
 }

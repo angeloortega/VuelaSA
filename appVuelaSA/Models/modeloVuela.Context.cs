@@ -68,17 +68,13 @@ namespace appVuelaSA.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proximos_Vuelos_Result>("Proximos_Vuelos", idClienteParameter);
         }
     
-        public virtual int Validar_LogIn(string nombreUsuario, string contrasenna, ObjectParameter output)
+        public virtual int Validar_LogIn(string nombreUsuario)
         {
             var nombreUsuarioParameter = nombreUsuario != null ?
                 new ObjectParameter("nombreUsuario", nombreUsuario) :
                 new ObjectParameter("nombreUsuario", typeof(string));
     
-            var contrasennaParameter = contrasenna != null ?
-                new ObjectParameter("contrasenna", contrasenna) :
-                new ObjectParameter("contrasenna", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Validar_LogIn", nombreUsuarioParameter, contrasennaParameter, output);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Validar_LogIn", nombreUsuarioParameter);
         }
     
         public virtual ObjectResult<Viajes_Result> Viajes()
@@ -106,6 +102,15 @@ namespace appVuelaSA.Models
                 new ObjectParameter("idViaje", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vuelos_Por_Viaje_Result>("Vuelos_Por_Viaje", idViajeParameter);
+        }
+    
+        public virtual ObjectResult<Asientos_Disoponibles_Por_Viaje_Result> Asientos_Disoponibles_Por_Viaje(Nullable<decimal> idViaje)
+        {
+            var idViajeParameter = idViaje.HasValue ?
+                new ObjectParameter("idViaje", idViaje) :
+                new ObjectParameter("idViaje", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Asientos_Disoponibles_Por_Viaje_Result>("Asientos_Disoponibles_Por_Viaje", idViajeParameter);
         }
     }
 }

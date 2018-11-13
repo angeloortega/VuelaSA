@@ -56,7 +56,7 @@
         <div class="form-group">
             <label for="contrasenna" class="control-label col-md-2">Contraseña:</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.contrasenna, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.contrasenna, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.contrasenna, "", new { @class = "text-danger" })
             </div>
         </div>

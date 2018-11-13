@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="proyecto2RequeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aeropuerto">
           <Key>
             <PropertyRef Name="idaeropuerto" />
@@ -407,6 +407,9 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Asientos_Disoponibles_Por_Viaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idViaje" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="Asientos_Por_Vuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idVuelo" Type="numeric" Mode="In" />
         </Function>
@@ -418,8 +421,6 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
         </Function>
         <Function Name="Validar_LogIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nombreUsuario" Type="varchar" Mode="In" />
-          <Parameter Name="contrasenna" Type="varchar" Mode="In" />
-          <Parameter Name="output" Type="int" Mode="InOut" />
         </Function>
         <Function Name="Viajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Viajes_Por_Origen_Destino" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -529,8 +530,7 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
             <End Role="vuelo" EntitySet="vuelo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="proyecto2RequeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -977,18 +977,16 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
             <End Role="reservacion" EntitySet="reservacion" />
           </AssociationSet>
           <FunctionImport Name="Asientos_Por_Vuelo" ReturnType="Collection(proyecto2RequeModel.Asientos_Por_Vuelo_Result)">
-            <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
+          <Parameter Name="idVuelo" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Historial_Vuelos" ReturnType="Collection(proyecto2RequeModel.Historial_Vuelos_Result)">
-            <Parameter Name="idcliente" Mode="In" Type="Decimal" />
+          <Parameter Name="idcliente" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Proximos_Vuelos" ReturnType="Collection(proyecto2RequeModel.Proximos_Vuelos_Result)">
-            <Parameter Name="idCliente" Mode="In" Type="Decimal" />
+          <Parameter Name="idCliente" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Validar_LogIn">
-            <Parameter Name="nombreUsuario" Mode="In" Type="String" />
-            <Parameter Name="contrasenna" Mode="In" Type="String" />
-            <Parameter Name="output" Mode="InOut" Type="Int32" />
+          <Parameter Name="nombreUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Viajes" ReturnType="Collection(proyecto2RequeModel.Viajes_Result)" />
           <FunctionImport Name="Viajes_Por_Origen_Destino" ReturnType="Collection(proyecto2RequeModel.Viajes_Por_Origen_Destino_Result)">
@@ -996,7 +994,10 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
             <Parameter Name="destino" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="Vuelos_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Vuelos_Por_Viaje_Result)">
-            <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          <Parameter Name="idViaje" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Asientos_Disoponibles_Por_Viaje" ReturnType="Collection(proyecto2RequeModel.Asientos_Disoponibles_Por_Viaje_Result)">
+          <Parameter Name="idViaje" Mode="In" Type="Decimal" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Asientos_Por_Vuelo_Result">
@@ -1046,6 +1047,13 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
           <Property Type="Decimal" Name="idAvion" Nullable="true" Precision="4" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoOrigen" Nullable="false" Precision="3" Scale="0" />
           <Property Type="Decimal" Name="idAeropuertoDestino" Nullable="false" Precision="3" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Asientos_Disoponibles_Por_Viaje_Result">
+          <Property Type="Decimal" Name="idasiento" Nullable="false" Precision="8" Scale="0" />
+          <Property Type="String" Name="estado" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="categoria" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="3" Scale="0" />
+          <Property Type="Decimal" Name="idavion" Nullable="false" Precision="4" Scale="0" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1281,6 +1289,17 @@ warning 6002: The table/view 'proyecto2Reque.dbo.Vista_Viaje' does not have a pr
                 <ScalarProperty Name="idAvion" ColumnName="idAvion" />
                 <ScalarProperty Name="idAeropuertoOrigen" ColumnName="idAeropuertoOrigen" />
                 <ScalarProperty Name="idAeropuertoDestino" ColumnName="idAeropuertoDestino" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Asientos_Disoponibles_Por_Viaje" FunctionName="proyecto2RequeModel.Store.Asientos_Disoponibles_Por_Viaje">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="proyecto2RequeModel.Asientos_Disoponibles_Por_Viaje_Result">
+                <ScalarProperty Name="idasiento" ColumnName="idasiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="idavion" ColumnName="idavion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
